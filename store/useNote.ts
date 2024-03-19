@@ -20,6 +20,11 @@ type NoteStore = {
   searchNotes: (keyword: string) => void
 }
 
+/**
+ * Creates a zustand store for managing notes state.
+ * Includes functions for fetching, adding, editing, deleting notes,
+ * as well as tracking UI state like active note, edit note, etc.
+ */
 export const useNoteStore = create<NoteStore>((set) => ({
   notes: [],
   isNew: false,

@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react'
 import Sidebar from '@/components/layout/Sidebar'
 import ContentArea from '@/components/layout/ContentArea'
 import MobileSidebar from '@/components/layout/MobileSidebar'
+import Loading from '@/components/Loading'
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -14,14 +15,7 @@ const Home = () => {
     fetchNotes().then(() => setIsLoading(false))
   }, [])
 
-  if (isLoading)
-    return (
-      <div className='flex h-screen items-center justify-center bg-black text-white'>
-        <h1 className='text-white text-4xl font-bold animate-pulse transition-all'>
-          Notes.
-        </h1>
-      </div>
-    )
+  if (isLoading) return <Loading />
 
   return (
     <main className='h-screen flex'>

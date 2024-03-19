@@ -11,6 +11,7 @@ import { Form, FormControl, FormField, FormItem } from '../ui/form'
 import { Input } from '../ui/input'
 import NoteMenu from '../note/NoteMenu'
 import Editor from '../editor/Editor'
+import NoteEmpty from './NoteEmpty'
 
 const formSchema = z.object({
   title: z
@@ -47,6 +48,7 @@ const Note = () => {
     saveNote(data.data)
   }
 
+  // when the active note index changes, update the form values
   useEffect(() => {
     if (activeIndex !== null) {
       form.setValue('title', notes[activeIndex].title)
@@ -54,13 +56,7 @@ const Note = () => {
     }
   }, [activeIndex, notes, form])
 
-  if (activeIndex === null) {
-    return (
-      <div className='flex flex-col max-w-4xl mx-auto items-center justify-center h-full text-neutral-400'>
-        <p>Create a Note By Click New Note</p>
-      </div>
-    )
-  }
+  if (activeIndex === null) return <NoteEmpty />
 
   return (
     <div className='flex flex-col max-w-4xl mx-auto'>

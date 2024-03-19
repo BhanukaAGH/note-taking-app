@@ -1,5 +1,4 @@
 import { Editor } from '@tiptap/react'
-import { Separator } from '../ui/separator'
 import {
   Bold,
   CodeXml,
@@ -13,6 +12,8 @@ import {
   Quote,
   Strikethrough,
 } from 'lucide-react'
+
+import { Separator } from '../ui/separator'
 import { Toggle } from '../ui/toggle'
 
 interface ToolbarProps {

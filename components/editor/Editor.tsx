@@ -1,13 +1,13 @@
 'use client'
 
+import { useEffect } from 'react'
+import { useNoteStore } from '@/store/useNote'
 import { useEditor, EditorContent } from '@tiptap/react'
 import Placeholder from '@tiptap/extension-placeholder'
 import Highlight from '@tiptap/extension-highlight'
 import StarterKit from '@tiptap/starter-kit'
-import Toolbar from './Toolbar'
-import { useNoteStore } from '@/store/useNote'
-import { useEffect } from 'react'
 
+import Toolbar from './Toolbar'
 interface EditorProps {
   content: string
   onChange: (richText: string) => void

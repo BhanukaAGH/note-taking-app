@@ -6,7 +6,8 @@ import { z } from 'zod'
 import { Form, FormControl, FormField, FormItem } from '../ui/form'
 import { CalendarDays } from 'lucide-react'
 import { Input } from '../ui/input'
-import NoteMenu from '../Note/NoteMenu'
+import NoteMenu from '../note/NoteMenu'
+import Editor from '../editor/Editor'
 
 const formSchema = z.object({
   title: z
@@ -68,11 +69,7 @@ const ContentArea = () => {
               render={({ field }) => (
                 <FormItem>
                   <FormControl>
-                    <Input
-                      placeholder='Enter content'
-                      {...field}
-                      className='font-semibold text-white text-3xl border-none bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0'
-                    />
+                    <Editor content={field.value} onChange={field.onChange} />
                   </FormControl>
                 </FormItem>
               )}

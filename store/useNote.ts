@@ -1,7 +1,7 @@
 import { create } from 'zustand'
 
 import { Note } from '@/types'
-import { notes } from '@/data/notes'
+import { createNote, deleteNote, updateNote } from '@/lib/api'
 
 type NoteStore = {
   notes: Note[]
@@ -10,6 +10,7 @@ type NoteStore = {
   isSearch: boolean
   searchResults: Note[]
   activeIndex: number | null
+  setNotes: (notes: Note[]) => void
   removeNote: () => void
   createNewNote: () => void
   saveNote: (data: { title: string; content: string }) => void
@@ -20,14 +21,15 @@ type NoteStore = {
 }
 
 export const useNoteStore = create<NoteStore>((set) => ({
-  notes: notes,
+  notes: [],
   isNew: false,
   isEdit: false,
   isSearch: false,
   searchResults: [],
   activeIndex: null,
+  setNotes: (notes) => set({ notes }),
   openNote: (index) => set({ activeIndex: index, isEdit: false, isNew: false }),
-  setIsEdit: (state) => set({ isEdit: state }),
+  setIsEdit: (state) => set({ isEdit: state, isNew: false }),
   setIsSearch: (val) => set({ isSearch: val }),
   searchNotes: (keyword) =>
     set((state) => ({
@@ -55,6 +57,8 @@ export const useNoteStore = create<NoteStore>((set) => ({
       activeIndex: state.notes.length,
     }))
   },
+
+  // Save Note
   saveNote: async (data) => {
     set((state) => ({
       isEdit: false,
@@ -67,7 +71,19 @@ export const useNoteStore = create<NoteStore>((set) => ({
         return note
       }),
     }))
+
+    const isNew = useNoteStore.getState().isNew
+    const notes = useNoteStore.getState().notes
+    const activeIndex = useNoteStore.getState().activeIndex
+
+    if (isNew) {
+      await createNote(data)
+    } else {
+      await updateNote(notes[activeIndex!].id!, data)
+    }
   },
+
+  // remove Note
   removeNote: async () => {
     const notes = useNoteStore.getState().notes
     const activeIndex = useNoteStore.getState().activeIndex
@@ -80,5 +96,7 @@ export const useNoteStore = create<NoteStore>((set) => ({
       ),
       activeIndex: null,
     }))
+
+    await deleteNote(notes[activeIndex!].id!)
   },
 }))

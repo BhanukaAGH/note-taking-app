@@ -44,7 +44,7 @@ const Note = () => {
       return
     }
 
-    saveNote(values)
+    saveNote(data.data)
   }
 
   useEffect(() => {
@@ -101,7 +101,7 @@ const Note = () => {
               <span>Date</span>
             </div>
             <div className='col-span-6 flex items-center text-white'>
-              {notes[activeIndex].createdAt!.toLocaleDateString()}
+              {new Date(notes[activeIndex].createdAt!).toLocaleDateString()}
             </div>
           </div>
           <FormField

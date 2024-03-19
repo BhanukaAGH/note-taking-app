@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 import { CalendarDays, CircleCheck } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNoteStore } from '@/store/useNote'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { Form, FormControl, FormField, FormItem } from '../ui/form'
@@ -34,6 +35,15 @@ const Note = () => {
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
+    const data = formSchema.safeParse(values)
+    if (!data.success) {
+      data.error.issues.forEach((issue) => {
+        toast.error(issue.message)
+      })
+
+      return
+    }
+
     saveNote(values)
   }
 

@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect } from 'react'
+import React, { useEffect, useRef } from 'react'
 import { CalendarDays, CircleCheck } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNoteStore } from '@/store/useNote'
@@ -22,6 +22,7 @@ const formSchema = z.object({
 })
 
 const Note = () => {
+  const inputRef = useRef<React.ElementRef<'input'>>(null)
   const activeIndex = useNoteStore((state) => state.activeIndex)
   const notes = useNoteStore((state) => state.notes)
   const isEdit = useNoteStore((state) => state.isEdit)
@@ -53,8 +54,11 @@ const Note = () => {
     if (activeIndex !== null) {
       form.setValue('title', notes[activeIndex].title)
       form.setValue('content', notes[activeIndex].content)
+      if (isEdit) {
+        inputRef.current?.focus()
+      }
     }
-  }, [activeIndex, notes, form])
+  }, [activeIndex, notes, form, isEdit])
 
   if (activeIndex === null) return <NoteEmpty />
 
@@ -67,13 +71,14 @@ const Note = () => {
               control={form.control}
               name='title'
               render={({ field }) => (
-                <FormItem>
+                <FormItem className='w-full pr-3'>
                   <FormControl>
                     <Input
                       {...field}
+                      ref={inputRef}
                       disabled={!isEdit}
                       placeholder='Enter title'
-                      className='font-semibold text-white text-3xl border-none bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+                      className='font-semibold text-white text-3xl border-none bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0 truncate'
                     />
                   </FormControl>
                 </FormItem>
@@ -91,6 +96,7 @@ const Note = () => {
               <NoteMenu />
             )}
           </div>
+
           <div className='grid grid-cols-8 text-sm'>
             <div className='col-span-2 flex items-center gap-x-3 text-gray-400'>
               <CalendarDays size={18} />
@@ -100,6 +106,7 @@ const Note = () => {
               {new Date(notes[activeIndex].createdAt!).toLocaleDateString()}
             </div>
           </div>
+
           <FormField
             control={form.control}
             name='content'

@@ -7,6 +7,7 @@ import { useNoteStore } from '@/store/useNote'
 
 import { Button } from '../ui/button'
 import { Input } from '../ui/input'
+import Logo from '../Logo'
 
 const Sidebar = () => {
   const notes = useNoteStore((state) => state.notes)
@@ -27,7 +28,7 @@ const Sidebar = () => {
     <div className='hidden lg:flex flex-col h-full max-w-xs w-full bg-black py-6 space-y-6'>
       <div className='flex flex-col px-5 space-y-6'>
         <div className='flex items-center justify-between'>
-          <h1 className='text-white text-2xl font-bold'>Notes.</h1>
+          <Logo />
           <Search
             className='text-2xl text-muted-foreground cursor-pointer hover:text-white'
             onClick={() => setIsSearch(true)}

@@ -8,6 +8,8 @@ import { CalendarDays } from 'lucide-react'
 import { Input } from '../ui/input'
 import NoteMenu from '../note/NoteMenu'
 import Editor from '../editor/Editor'
+import { useNoteStore } from '@/store/useNote'
+import { useEffect } from 'react'
 
 const formSchema = z.object({
   title: z
@@ -18,6 +20,9 @@ const formSchema = z.object({
 })
 
 const ContentArea = () => {
+  const activeIndex = useNoteStore((state) => state.activeIndex)
+  const notes = useNoteStore((state) => state.notes)
+
   const form = useForm<{ title: string; content: string }>({
     mode: 'onChange',
     defaultValues: {
@@ -28,6 +33,23 @@ const ContentArea = () => {
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
     console.log(values)
+  }
+
+  useEffect(() => {
+    if (activeIndex !== null) {
+      form.setValue('title', notes[activeIndex].title)
+      form.setValue('content', notes[activeIndex].content)
+    }
+  }, [activeIndex, notes, form])
+
+  if (activeIndex === null) {
+    return (
+      <div className='h-full w-full bg-[#1C1C1C] p-12'>
+        <div className='flex flex-col max-w-4xl mx-auto items-center justify-center h-full text-neutral-400'>
+          <p>Create a Note By Click New Note</p>
+        </div>
+      </div>
+    )
   }
 
   return (
@@ -60,7 +82,7 @@ const ContentArea = () => {
                 <span>Date</span>
               </div>
               <div className='col-span-6 flex items-center text-white'>
-                {new Date().toLocaleDateString()}
+                {new Date(notes[activeIndex].createdAt).toLocaleDateString()}
               </div>
             </div>
             <FormField

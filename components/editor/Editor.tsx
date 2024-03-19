@@ -5,6 +5,8 @@ import Placeholder from '@tiptap/extension-placeholder'
 import Highlight from '@tiptap/extension-highlight'
 import StarterKit from '@tiptap/starter-kit'
 import Toolbar from './Toolbar'
+import { useNoteStore } from '@/store/useNote'
+import { useEffect } from 'react'
 
 interface EditorProps {
   content: string
@@ -12,6 +14,9 @@ interface EditorProps {
 }
 
 const Editor = ({ content, onChange }: EditorProps) => {
+  const activeIndex = useNoteStore((state) => state.activeIndex)
+  const notes = useNoteStore((state) => state.notes)
+
   const editor = useEditor({
     extensions: [
       StarterKit,
@@ -31,6 +36,13 @@ const Editor = ({ content, onChange }: EditorProps) => {
       onChange(editor.getHTML())
     },
   })
+
+  useEffect(() => {
+    // Ensure the editor instance exists and has not been destroyed
+    if (editor && !editor.isDestroyed && activeIndex !== null) {
+      editor?.commands?.setContent(notes[activeIndex].content)
+    }
+  }, [editor, activeIndex, notes])
 
   return (
     <div className='flex flex-col gap-y-7'>

@@ -14,6 +14,8 @@ const Sidebar = () => {
   const searchNotes = useNoteStore((state) => state.searchNotes)
   const setIsSearch = useNoteStore((state) => state.setIsSearch)
   const isSearch = useNoteStore((state) => state.isSearch)
+  const openNote = useNoteStore((state) => state.openNote)
+  const activeIndex = useNoteStore((state) => state.activeIndex)
 
   const handleSearch = useDebounceCallback((value: string) => {
     searchNotes(value)
@@ -60,8 +62,10 @@ const Sidebar = () => {
             <div
               key={index}
               className={cn(
-                `bg-transparent text-gray-400 py-3 hover:bg-[#312EB5] hover:text-white cursor-pointer`
+                `bg-transparent text-gray-400 py-3 hover:bg-[#312EB5] hover:text-white cursor-pointer`,
+                activeIndex === index && 'bg-[#312EB5] text-white'
               )}
+              onClick={() => openNote(index)}
             >
               <div className='px-5 flex items-center gap-4'>
                 <NotepadText size={20} />

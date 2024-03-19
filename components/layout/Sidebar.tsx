@@ -1,28 +1,62 @@
-import { cn } from '@/lib/utils'
+'use client'
 
-import { NotepadText, Plus, Search } from 'lucide-react'
+import { cn } from '@/lib/utils'
+import { NotepadText, Plus, Search, X } from 'lucide-react'
+import { useDebounceCallback } from 'usehooks-ts'
+import { useNoteStore } from '@/store/useNote'
+
 import { Button } from '../ui/button'
-import { notes } from '@/data/notes'
+import { Input } from '../ui/input'
 
 const Sidebar = () => {
+  const notes = useNoteStore((state) => state.notes)
+  const searchResults = useNoteStore((state) => state.searchResults)
+  const searchNotes = useNoteStore((state) => state.searchNotes)
+  const setIsSearch = useNoteStore((state) => state.setIsSearch)
+  const isSearch = useNoteStore((state) => state.isSearch)
+
+  const handleSearch = useDebounceCallback((value: string) => {
+    searchNotes(value)
+  }, 300)
+
   return (
     <div className='flex flex-col h-full max-w-xs w-full bg-black py-6 space-y-6'>
       <div className='flex flex-col px-5 space-y-6'>
         <div className='flex items-center justify-between'>
           <h1 className='text-white text-2xl font-bold'>Notes.</h1>
-          <Search className='text-2xl text-muted-foreground cursor-pointer hover:text-white' />
+          <Search
+            className='text-2xl text-muted-foreground cursor-pointer hover:text-white'
+            onClick={() => setIsSearch(true)}
+          />
         </div>
 
-        <Button className='gap-x-2' size={'lg'}>
-          <Plus size={20} />
-          New Note
-        </Button>
+        {isSearch ? (
+          <div className='flex items-center gap-2 bg-neutral-800 px-2'>
+            <Search size={26} className='text-muted-foreground' />
+            <Input
+              type='text'
+              placeholder='Search...'
+              className='bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-white px-1'
+              onChange={(e) => handleSearch(e.target.value)}
+            />
+            <X
+              size={24}
+              className='text-muted-foreground hover:text-white cursor-pointer'
+              onClick={() => setIsSearch(false)}
+            />
+          </div>
+        ) : (
+          <Button className='gap-x-2' size={'lg'}>
+            <Plus size={20} />
+            New Note
+          </Button>
+        )}
       </div>
 
       <div className='flex flex-col space-y-2'>
         <p className='text-muted-foreground text-sm px-5'>Notes</p>
         <div className='flex flex-col space-y-1'>
-          {notes.map((note, index) => (
+          {(isSearch ? searchResults : notes).map((note, index) => (
             <div
               key={index}
               className={cn(

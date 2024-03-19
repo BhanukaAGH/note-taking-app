@@ -24,7 +24,7 @@ const Sidebar = () => {
   }, 300)
 
   return (
-    <div className='flex flex-col h-full max-w-xs w-full bg-black py-6 space-y-6'>
+    <div className='hidden lg:flex flex-col h-full max-w-xs w-full bg-black py-6 space-y-6'>
       <div className='flex flex-col px-5 space-y-6'>
         <div className='flex items-center justify-between'>
           <h1 className='text-white text-2xl font-bold'>Notes.</h1>

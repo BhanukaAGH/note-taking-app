@@ -3,8 +3,9 @@
 import { fetchNotes } from '@/lib/api'
 import { useEffect, useState } from 'react'
 
-import ContentArea from '@/components/layout/ContentArea'
 import Sidebar from '@/components/layout/Sidebar'
+import ContentArea from '@/components/layout/ContentArea'
+import MobileSidebar from '@/components/layout/MobileSidebar'
 
 const Home = () => {
   const [isLoading, setIsLoading] = useState(true)
@@ -26,6 +27,7 @@ const Home = () => {
     <main className='h-screen flex'>
       <Sidebar />
       <ContentArea />
+      <MobileSidebar />
     </main>
   )
 }

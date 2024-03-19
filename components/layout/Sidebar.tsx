@@ -16,6 +16,8 @@ const Sidebar = () => {
   const isSearch = useNoteStore((state) => state.isSearch)
   const openNote = useNoteStore((state) => state.openNote)
   const activeIndex = useNoteStore((state) => state.activeIndex)
+  const isEdit = useNoteStore((state) => state.isEdit)
+  const createNewNote = useNoteStore((state) => state.createNewNote)
 
   const handleSearch = useDebounceCallback((value: string) => {
     searchNotes(value)
@@ -48,7 +50,12 @@ const Sidebar = () => {
             />
           </div>
         ) : (
-          <Button className='gap-x-2' size={'lg'}>
+          <Button
+            className='gap-x-2'
+            size={'lg'}
+            onClick={createNewNote}
+            disabled={isEdit}
+          >
             <Plus size={20} />
             New Note
           </Button>
@@ -63,13 +70,16 @@ const Sidebar = () => {
               key={index}
               className={cn(
                 `bg-transparent text-gray-400 py-3 hover:bg-[#312EB5] hover:text-white cursor-pointer`,
+                isEdit && 'pointer-events-none text-gray-600',
                 activeIndex === index && 'bg-[#312EB5] text-white'
               )}
               onClick={() => openNote(index)}
             >
               <div className='px-5 flex items-center gap-4'>
                 <NotepadText size={20} />
-                <span className='font-medium truncate'>{note.title}</span>
+                <span className='font-medium truncate'>
+                  {note.title ? note.title : 'Untitled'}
+                </span>
               </div>
             </div>
           ))}

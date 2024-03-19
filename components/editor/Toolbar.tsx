@@ -12,6 +12,7 @@ import {
   Quote,
   Strikethrough,
 } from 'lucide-react'
+import { useNoteStore } from '@/store/useNote'
 
 import { Separator } from '../ui/separator'
 import { Toggle } from '../ui/toggle'
@@ -21,23 +22,28 @@ interface ToolbarProps {
 }
 
 const Toolbar = ({ editor }: ToolbarProps) => {
+  const isEdit = useNoteStore((state) => state.isEdit)
+
   if (!editor) return null
 
   return (
     <div className='flex flex-wrap items-center gap-x-2 py-2 border-y border-y-muted-foreground text-white font-semibold'>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('bold')}
         onPressedChange={() => editor.chain().focus().toggleBold().run()}
       >
         <Bold className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('italic')}
         onPressedChange={() => editor.chain().focus().toggleItalic().run()}
       >
         <Italic className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('strike')}
         onPressedChange={() => editor.chain().focus().toggleStrike().run()}
       >
@@ -47,6 +53,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
       <Separator className='h-5' orientation='vertical' />
 
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('heading', { level: 1 })}
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 1 }).run()
@@ -55,6 +62,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
         <Heading1 className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('heading', { level: 2 })}
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 2 }).run()
@@ -63,6 +71,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
         <Heading2 className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('heading', { level: 3 })}
         onPressedChange={() =>
           editor.chain().focus().toggleHeading({ level: 3 }).run()
@@ -71,18 +80,21 @@ const Toolbar = ({ editor }: ToolbarProps) => {
         <Heading3 className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('bulletList')}
         onPressedChange={() => editor.chain().focus().toggleBulletList().run()}
       >
         <List className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('orderedList')}
         onPressedChange={() => editor.chain().focus().toggleOrderedList().run()}
       >
         <ListOrdered className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('codeBlock')}
         onPressedChange={() => editor.chain().focus().toggleCodeBlock().run()}
       >
@@ -92,12 +104,14 @@ const Toolbar = ({ editor }: ToolbarProps) => {
       <Separator className='h-5' orientation='vertical' />
 
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('blockquote')}
         onPressedChange={() => editor.chain().focus().toggleBlockquote().run()}
       >
         <Quote className='h-4 w-4' />
       </Toggle>
       <Toggle
+        disabled={!isEdit}
         pressed={editor.isActive('highlight')}
         onPressedChange={() => editor.chain().focus().toggleHighlight().run()}
       >

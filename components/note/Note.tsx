@@ -1,7 +1,7 @@
 'use client'
 
 import { useEffect } from 'react'
-import { CalendarDays } from 'lucide-react'
+import { CalendarDays, CircleCheck } from 'lucide-react'
 import { useForm } from 'react-hook-form'
 import { useNoteStore } from '@/store/useNote'
 import { z } from 'zod'
@@ -22,6 +22,8 @@ const formSchema = z.object({
 const Note = () => {
   const activeIndex = useNoteStore((state) => state.activeIndex)
   const notes = useNoteStore((state) => state.notes)
+  const isEdit = useNoteStore((state) => state.isEdit)
+  const saveNote = useNoteStore((state) => state.saveNote)
 
   const form = useForm<{ title: string; content: string }>({
     mode: 'onChange',
@@ -32,7 +34,7 @@ const Note = () => {
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
-    console.log(values)
+    saveNote(values)
   }
 
   useEffect(() => {
@@ -53,7 +55,7 @@ const Note = () => {
   return (
     <div className='flex flex-col max-w-4xl mx-auto'>
       <Form {...form}>
-        <form className='space-y-7'>
+        <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-7'>
           <div className='flex items-center justify-between'>
             <FormField
               control={form.control}
@@ -62,8 +64,9 @@ const Note = () => {
                 <FormItem>
                   <FormControl>
                     <Input
-                      placeholder='Enter title'
                       {...field}
+                      disabled={!isEdit}
+                      placeholder='Enter title'
                       className='font-semibold text-white text-3xl border-none bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0'
                     />
                   </FormControl>
@@ -71,7 +74,16 @@ const Note = () => {
               )}
             />
 
-            <NoteMenu />
+            {isEdit ? (
+              <button type='submit'>
+                <CircleCheck
+                  size={30}
+                  className='text-muted-foreground cursor-pointer hover:text-green-500 ring-0'
+                />
+              </button>
+            ) : (
+              <NoteMenu />
+            )}
           </div>
           <div className='grid grid-cols-8 text-sm'>
             <div className='col-span-2 flex items-center gap-x-3 text-gray-400'>
@@ -79,7 +91,7 @@ const Note = () => {
               <span>Date</span>
             </div>
             <div className='col-span-6 flex items-center text-white'>
-              {new Date(notes[activeIndex].createdAt).toLocaleDateString()}
+              {notes[activeIndex].createdAt!.toLocaleDateString()}
             </div>
           </div>
           <FormField

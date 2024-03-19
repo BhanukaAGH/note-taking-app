@@ -1,4 +1,5 @@
 import { CircleEllipsis, Pencil, Trash } from 'lucide-react'
+import { useNoteStore } from '@/store/useNote'
 
 import {
   DropdownMenu,
@@ -9,6 +10,9 @@ import {
 } from '../ui/dropdown-menu'
 
 const NoteMenu = () => {
+  const setIsEdit = useNoteStore((state) => state.setIsEdit)
+  const removeNote = useNoteStore((state) => state.removeNote)
+
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -22,10 +26,16 @@ const NoteMenu = () => {
         align='end'
       >
         <DropdownMenuGroup>
-          <DropdownMenuItem className='flex items-center gap-4 py-3'>
+          <DropdownMenuItem
+            className='flex items-center gap-4 py-3'
+            onClick={() => setIsEdit(true)}
+          >
             <Pencil size={20} /> Edit
           </DropdownMenuItem>
-          <DropdownMenuItem className='flex items-center gap-4 py-3 focus:text-white focus:bg-destructive'>
+          <DropdownMenuItem
+            className='flex items-center gap-4 py-3 focus:text-white focus:bg-destructive'
+            onClick={removeNote}
+          >
             <Trash size={20} />
             Delete
           </DropdownMenuItem>

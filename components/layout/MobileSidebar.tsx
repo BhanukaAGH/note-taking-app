@@ -26,20 +26,20 @@ const MobileSidebar = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <div className='absolute top-2 left-2 aspect-square rounded-full w-12 flex items-center justify-center bg-neutral-700 text-white lg:hidden'>
+        <div className='absolute left-2 top-2 flex aspect-square w-12 items-center justify-center rounded-full bg-neutral-700 text-white lg:hidden'>
           <Menu size={24} />
         </div>
       </SheetTrigger>
       <SheetContent
         side={'left'}
-        className='p-0 !max-w-xs w-full bg-black border-none lg:hidden'
+        className='w-full !max-w-xs border-none bg-black p-0 lg:hidden'
       >
-        <div className='flex flex-col h-full max-w-xs w-full bg-black py-6 space-y-6'>
-          <div className='flex flex-col px-5 space-y-6'>
+        <div className='flex h-full w-full max-w-xs flex-col space-y-6 bg-black py-6'>
+          <div className='flex flex-col space-y-6 px-5'>
             <div className='flex items-center justify-between'>
               <Logo />
               <Search
-                className='text-2xl text-muted-foreground cursor-pointer hover:text-white'
+                className='cursor-pointer text-2xl text-muted-foreground hover:text-white'
                 onClick={() => setIsSearch(true)}
               />
             </div>
@@ -50,19 +50,19 @@ const MobileSidebar = () => {
                 <Input
                   type='text'
                   placeholder='Search...'
-                  className='bg-transparent border-none focus-visible:ring-0 focus-visible:ring-offset-0 text-white px-1'
+                  className='border-none bg-transparent px-1 text-white focus-visible:ring-0 focus-visible:ring-offset-0'
                   onChange={(e) => handleSearch(e.target.value)}
                 />
                 <X
                   size={24}
-                  className='text-muted-foreground hover:text-white cursor-pointer'
+                  className='cursor-pointer text-muted-foreground hover:text-white'
                   onClick={() => setIsSearch(false)}
                 />
               </div>
             ) : (
               <SheetClose>
                 <Button
-                  className='gap-x-2 w-full'
+                  className='w-full gap-x-2'
                   size={'lg'}
                   onClick={createNewNote}
                   disabled={isEdit}
@@ -75,21 +75,21 @@ const MobileSidebar = () => {
           </div>
 
           <div className='flex flex-col space-y-2'>
-            <p className='text-muted-foreground text-sm px-5'>Notes</p>
+            <p className='px-5 text-sm text-muted-foreground'>Notes</p>
             <div className='flex flex-col space-y-1'>
               {(isSearch ? searchResults : notes).map((note, index) => (
                 <div
                   key={index}
                   className={cn(
-                    `bg-transparent text-gray-400 py-3 hover:bg-[#312EB5] hover:text-white cursor-pointer`,
+                    `cursor-pointer bg-transparent py-3 text-gray-400 hover:bg-[#312EB5] hover:text-white`,
                     isEdit && 'pointer-events-none text-gray-600',
                     activeIndex === index && 'bg-[#312EB5] text-white'
                   )}
                   onClick={() => openNote(index)}
                 >
-                  <SheetClose className='px-5 flex items-center gap-4'>
+                  <SheetClose className='flex items-center gap-4 px-5'>
                     <NotepadText size={20} />
-                    <span className='font-medium truncate'>
+                    <span className='truncate font-medium'>
                       {note.title ? note.title : 'Untitled'}
                     </span>
                   </SheetClose>

@@ -45,21 +45,21 @@ export const useNoteStore = create<NoteStore>((set) => ({
               (note) =>
                 note.title.toLowerCase().includes(keyword.toLowerCase()) ||
                 note.content.toLowerCase().includes(keyword.toLowerCase())
-            ),
+            )
     })),
 
   createNewNote: () => {
     const newNote: Note = {
       title: '',
       content: '',
-      createdAt: new Date(),
+      createdAt: new Date()
     }
 
     set((state) => ({
       isNew: true,
       isEdit: true,
       notes: [...state.notes, newNote],
-      activeIndex: state.notes.length,
+      activeIndex: state.notes.length
     }))
   },
 
@@ -74,7 +74,7 @@ export const useNoteStore = create<NoteStore>((set) => ({
         }
 
         return note
-      }),
+      })
     }))
 
     const isNew = useNoteStore.getState().isNew
@@ -99,9 +99,9 @@ export const useNoteStore = create<NoteStore>((set) => ({
           (state.isNew && activeIndex === index) ||
           note.id !== notes[activeIndex!].id
       ),
-      activeIndex: null,
+      activeIndex: null
     }))
 
     await deleteNote(notes[activeIndex!].id!)
-  },
+  }
 }))

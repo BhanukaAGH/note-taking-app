@@ -18,7 +18,7 @@ const Home = () => {
   if (isLoading) return <Loading />
 
   return (
-    <main className='h-screen flex'>
+    <main className='flex h-screen'>
       <Sidebar />
       <ContentArea />
       <MobileSidebar />

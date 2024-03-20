@@ -18,7 +18,7 @@ export const POST = async (req: Request) => {
     }
 
     const data = await db.note.create({
-      data: { title, content: content ?? '' },
+      data: { title, content: content ?? '' }
     })
 
     return Response.json(data)

@@ -6,7 +6,7 @@ const NoteEmpty = () => {
   const createNewNote = useNoteStore((state) => state.createNewNote)
 
   return (
-    <div className='flex flex-col max-w-4xl mx-auto items-center justify-center h-full'>
+    <div className='mx-auto flex h-full max-w-4xl flex-col items-center justify-center'>
       <div className='text-center'>
         <h2 className='text-2xl font-bold text-neutral-700'>
           No Note Selected
@@ -20,7 +20,7 @@ const NoteEmpty = () => {
         <Button
           size={'lg'}
           onClick={createNewNote}
-          className='bg-neutral-800 hover:bg-neutral-700 text-white'
+          className='bg-neutral-800 text-white hover:bg-neutral-700'
         >
           New Note
         </Button>

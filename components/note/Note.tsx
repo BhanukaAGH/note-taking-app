@@ -18,7 +18,7 @@ const formSchema = z.object({
     .string({ required_error: 'title is missing' })
     .min(1, { message: 'title is missing' })
     .trim(),
-  content: z.string().max(10000, { message: 'Note is too long.' }).trim(),
+  content: z.string().max(10000, { message: 'Note is too long.' }).trim()
 })
 
 const Note = () => {
@@ -32,8 +32,8 @@ const Note = () => {
     mode: 'onChange',
     defaultValues: {
       title: '',
-      content: '',
-    },
+      content: ''
+    }
   })
 
   const onSubmit = (values: z.infer<typeof formSchema>) => {
@@ -63,7 +63,7 @@ const Note = () => {
   if (activeIndex === null) return <NoteEmpty />
 
   return (
-    <div className='flex flex-col max-w-4xl mx-auto'>
+    <div className='mx-auto flex max-w-4xl flex-col'>
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className='space-y-7'>
           <div className='flex items-center justify-between'>
@@ -78,7 +78,7 @@ const Note = () => {
                       ref={inputRef}
                       disabled={!isEdit}
                       placeholder='Enter title'
-                      className='font-semibold text-white text-3xl border-none bg-transparent px-0 focus-visible:ring-0 focus-visible:ring-offset-0 truncate'
+                      className='truncate border-none bg-transparent px-0 text-3xl font-semibold text-white focus-visible:ring-0 focus-visible:ring-offset-0'
                     />
                   </FormControl>
                 </FormItem>
@@ -89,7 +89,7 @@ const Note = () => {
               <button type='submit'>
                 <CircleCheck
                   size={30}
-                  className='text-muted-foreground cursor-pointer hover:text-green-500 ring-0'
+                  className='cursor-pointer text-muted-foreground ring-0 hover:text-green-500'
                 />
               </button>
             ) : (

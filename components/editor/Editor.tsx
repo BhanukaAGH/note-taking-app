@@ -24,8 +24,8 @@ const Editor = ({ content, onChange }: EditorProps) => {
         StarterKit,
         Highlight,
         Placeholder.configure({
-          placeholder: 'Write here...',
-        }),
+          placeholder: 'Write here...'
+        })
       ],
       content: content,
       editable: isEdit,
@@ -33,12 +33,12 @@ const Editor = ({ content, onChange }: EditorProps) => {
         attributes: {
           class: `w-full h-[calc(100vh-350px)] sm:h-[calc(100vh-290px)] md:h-[calc(100vh-280px)] text-white focus:outline-none overflow-hidden overflow-y-scroll no-scrollbar ${
             !isEdit && 'select-none'
-          }`,
-        },
+          }`
+        }
       },
       onUpdate: ({ editor }) => {
         onChange(editor.getHTML())
-      },
+      }
     },
     [isEdit]
   )

@@ -10,7 +10,7 @@ import {
   List,
   ListOrdered,
   Quote,
-  Strikethrough,
+  Strikethrough
 } from 'lucide-react'
 import { useNoteStore } from '@/store/useNote'
 
@@ -27,7 +27,7 @@ const Toolbar = ({ editor }: ToolbarProps) => {
   if (!editor) return null
 
   return (
-    <div className='flex flex-wrap items-center gap-x-2 py-2 border-y border-y-muted-foreground text-white font-semibold'>
+    <div className='flex flex-wrap items-center gap-x-2 border-y border-y-muted-foreground py-2 font-semibold text-white'>
       <Toggle
         disabled={!isEdit}
         pressed={editor.isActive('bold')}

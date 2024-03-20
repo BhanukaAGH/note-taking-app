@@ -8,11 +8,11 @@ const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title: 'Notes.',
-  description: 'Notes.: A Simple and Elegant Note-Taking App',
+  description: 'Notes.: A Simple and Elegant Note-Taking App'
 }
 
 export default function RootLayout({
-  children,
+  children
 }: Readonly<{
   children: React.ReactNode
 }>) {

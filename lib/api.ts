@@ -15,9 +15,9 @@ export const createNote = async (data: { title: string; content: string }) => {
     await fetch('/api/notes', {
       method: 'POST',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     })
 
     await fetchNotes()
@@ -36,9 +36,9 @@ export const updateNote = async (
     await fetch(`/api/notes/${id}`, {
       method: 'PUT',
       headers: {
-        'Content-Type': 'application/json',
+        'Content-Type': 'application/json'
       },
-      body: JSON.stringify(data),
+      body: JSON.stringify(data)
     })
 
     await fetchNotes()
@@ -52,7 +52,7 @@ export const updateNote = async (
 export const deleteNote = async (id: string) => {
   try {
     await fetch(`/api/notes/${id}`, {
-      method: 'DELETE',
+      method: 'DELETE'
     })
     await fetchNotes()
     toast.success('Note deleted successfully')

@@ -9,9 +9,9 @@ export const PUT = async (
 
     await db.note.update({
       where: {
-        id: params.noteId.toString(),
+        id: params.noteId.toString()
       },
-      data: { title, content },
+      data: { title, content }
     })
 
     return Response.json('Note updated successfully.')
@@ -30,8 +30,8 @@ export const DELETE = async (
   try {
     await db.note.delete({
       where: {
-        id: params.noteId.toString(),
-      },
+        id: params.noteId.toString()
+      }
     })
 
     return Response.json('Note deleted successfully.')
